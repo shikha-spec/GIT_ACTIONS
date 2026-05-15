@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        nav {
+            background: #34495e;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 8px;
+            width: 70%;
+        }
+
+        button {
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>E-Library Management System</h1>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Books</a>
+        <a href="#">Members</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <div class="container">
+        <div class="search-box">
+            <input type="text" id="searchBook" placeholder="Search books...">
+            <button onclick="searchBook()">Search</button>
+        </div>
+
+        <table id="bookTable">
+            <tr>
+                <th>Book ID</th>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            <tr>
+                <td>101</td>
+                <td>Java Programming</td>
+                <td>James Gosling</td>
+                <td class="status">Available</td>
+                <td>
+                    <button onclick="issueBook(this)">Issue</button>
+                    <button onclick="returnBook(this)">Return</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>102</td>
+                <td>Python Basics</td>
+                <td>Guido van Rossum</td>
+                <td class="status">Available</td>
+                <td>
+                    <button onclick="issueBook(this)">Issue</button>
+                    <button onclick="returnBook(this)">Return</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>103</td>
+                <td>Web Development</td>
+                <td>John Duckett</td>
+                <td class="status">Available</td>
+                <td>
+                    <button onclick="issueBook(this)">Issue</button>
+                    <button onclick="returnBook(this)">Return</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function issueBook(button) {
+            let row = button.parentElement.parentElement;
+            let status = row.querySelector(".status");
+
+            if (status.innerText === "Available") {
+                status.innerText = "Issued";
+                alert("Book Issued Successfully!");
+            } else {
+                alert("Book already issued!");
+            }
+        }
+
+        function returnBook(button) {
+            let row = button.parentElement.parentElement;
+            let status = row.querySelector(".status");
+
+            if (status.innerText === "Issued") {
+                status.innerText = "Available";
+                alert("Book Returned Successfully!");
+            } else {
+                alert("Book is already available!");
+            }
+        }
+
+        function searchBook() {
+            let input = document.getElementById("searchBook").value.toLowerCase();
+            let table = document.getElementById("bookTable");
+            let rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+                let bookName = rows[i].getElementsByTagName("td")[1];
+
+                if (bookName) {
+                    let textValue = bookName.textContent || bookName.innerText;
+
+                    if (textValue.toLowerCase().indexOf(input) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
